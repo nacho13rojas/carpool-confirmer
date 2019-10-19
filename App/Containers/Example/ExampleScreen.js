@@ -6,6 +6,7 @@ import ExampleActions from 'App/Stores/Example/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import { Images } from 'App/Theme'
+import QRCode from 'react-native-qrcode-svg';
 
 
 class ExampleScreen extends React.Component {
@@ -15,11 +16,14 @@ class ExampleScreen extends React.Component {
     this.state = {
       isDriver: false,
       isPassenger: false,
+      qrCodeValueString: '',
     }
   }
 
   componentDidMount() {
-
+    const { driverId } = this.props;
+    const qrCodeValue = { driverId, date: new Date() }
+    this.setState({ qrCodeValueString: JSON.stringify(qrCodeValue) })
   }
 
   onDriverClick = () => {
@@ -31,8 +35,9 @@ class ExampleScreen extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     console.log(this.state)
-    const { isDriver, isPassenger } = this.state
+    const { isDriver, isPassenger, qrCodeValueString } = this.state
 
     return (
       <View style={Style.container}>
@@ -44,7 +49,11 @@ class ExampleScreen extends React.Component {
         </View>
 
         { isDriver ? (
-          <Text style={Style.text}>QRCode</Text>
+          <View style={Style.qrcodeContainer}>
+            <QRCode
+              value={qrCodeValueString}
+            />
+          </View>
         ) : 
         isPassenger ? (
           <Text style={Style.instructions}>Camera</Text>
@@ -65,11 +74,15 @@ ExampleScreen.propTypes = {
   liveInEurope: PropTypes.bool,
 }
 
-const mapStateToProps = (state) => ({
-  user: state.example.user,
-  userIsLoading: state.example.userIsLoading,
-  userErrorMessage: state.example.userErrorMessage,
-  liveInEurope: liveInEurope(state),
+const mapStateToProps = ({ example, driver, passenger }) => ({
+  user: example.user,
+  userIsLoading: example.userIsLoading,
+  userErrorMessage: example.userErrorMessage,
+  liveInEurope: liveInEurope(example),
+  driverId: driver.id,
+  driver: driver,
+  passengerId: passenger.id,
+  passenger: passenger,
 })
 
 const mapDispatchToProps = (dispatch) => ({

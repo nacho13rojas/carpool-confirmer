@@ -57,4 +57,7 @@ export default StyleSheet.create({
   selectedButton: {
     color: '#00FF00',
   },
+  qrcodeContainer: {
+    alignItems: 'center',
+  },
 })
