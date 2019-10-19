@@ -1,5 +1,15 @@
 import React from 'react'
-import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
+import { 
+  Platform, 
+  Text, 
+  View, 
+  Button, 
+  ActivityIndicator, 
+  Image, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Alert
+} from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
@@ -7,6 +17,7 @@ import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import { Images } from 'App/Theme'
 import QRCode from 'react-native-qrcode-svg';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 
 class ExampleScreen extends React.Component {
@@ -34,6 +45,11 @@ class ExampleScreen extends React.Component {
     this.setState({ isDriver: false, isPassenger: true })
   }
 
+  onSuccess = (e) => {
+    console.log(e.data)
+    Alert.alert(e.data);
+  }
+
   render() {
     console.log(this.props)
     console.log(this.state)
@@ -56,8 +72,20 @@ class ExampleScreen extends React.Component {
           </View>
         ) : 
         isPassenger ? (
-          <Text style={Style.instructions}>Camera</Text>
-        ) :
+          <QRCodeScanner
+            onRead={this.onSuccess}
+            topContent={
+              <Text style={styles.centerText}>
+                Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
+              </Text>
+            }
+            bottomContent={
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText}>OK. Got it!</Text>
+              </TouchableOpacity>
+            }
+          />        
+      ) :
           null 
         }
         <Button onPress={() => this._fetchUser()} title="Compartilhar localização" />
@@ -65,6 +93,26 @@ class ExampleScreen extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
+});
 
 ExampleScreen.propTypes = {
   user: PropTypes.object,
