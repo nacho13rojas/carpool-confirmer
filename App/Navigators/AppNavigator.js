@@ -1,8 +1,8 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
-import ExampleScreen from 'App/Containers/example/ExampleScreen'
+import ValidateRideScreen from 'App/Containers/example/ValidateRideScreen'
 import SplashScreen from 'App/Containers/splashScreen/SplashScreen'
-// import LocationSharingScreen from 'App/Containers/locationSharing/LocationSharingScreen'
+import LocationSharingScreen from 'App/Containers/locationSharing/LocationSharingScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -12,8 +12,8 @@ import SplashScreen from 'App/Containers/splashScreen/SplashScreen'
 const StackNavigator = createStackNavigator(
   {
     SplashScreen: SplashScreen,
-    MainScreen: ExampleScreen,
-    // LocationSharingScreen: LocationSharingScreen,
+    MainScreen: ValidateRideScreen,
+    LocationSharingScreen: LocationSharingScreen,
   },
   {
     initialRouteName: 'SplashScreen',

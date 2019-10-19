@@ -14,14 +14,15 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
-import Style from './ExampleScreenStyle'
+import Style from './ValidateRideScreenStyle'
 import { Images } from 'App/Theme'
 import QRCode from 'react-native-qrcode-svg';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Geolocation from '@react-native-community/geolocation';
+import NavigationService from '../../Services/NavigationService'
 
 
-class ExampleScreen extends React.Component {
+class ValidateRideScreen extends React.Component {
 
   constructor(props) {
     super(props)
@@ -49,14 +50,13 @@ class ExampleScreen extends React.Component {
   onSuccess = (e) => {
     console.log(e.data)
     Alert.alert(e.data);
-    
+    NavigationService.navigate('LocationSharingScreen')
   }
 
   getLocation = () => {
     Geolocation.getCurrentPosition(
       position => {
-        const location = JSON.stringify(position);
-        this.setState({ location });
+        this.setState({ position });
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -70,70 +70,51 @@ class ExampleScreen extends React.Component {
 
     return (
       <View style={Style.container}>
-        <Text style={Style.text}>Validar carona</Text>
+        <Text style={Style.title}>Validar carona</Text>
 
         <View style={Style.buttonsContainer}>
-          <Button onPress={this.onDriverClick} color={ isDriver ? "rgb(33, 150, 243)" : "rgb(125, 125, 125)" } title="Motorista" />
-          <Button onPress={this.onPassengerClick} color={ isPassenger ? "rgb(33, 150, 243)" : "rgb(125, 125, 125)" } title="Caroneiro" />
+          <TouchableOpacity
+              style={[Style.button, isDriver ? { backgroundColor: "rgb(126, 181, 237)" } : null ]}
+              onPress={this.onDriverClick}>
+            <Text>Motorista</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+              style={[Style.button, isPassenger ? { backgroundColor: "rgb(126, 181, 237)" } : null ]}
+              onPress={this.onPassengerClick}>
+            <Text>Caroneiro</Text>
+          </TouchableOpacity>
         </View>
 
         { isDriver ? (
-          <View style={Style.qrcodeContainer}>
-            <QRCode
-              value={qrCodeValueString}
-            />
+          <View style={Style.driverContainer}>
+            <View style={Style.qrcodeContainer}>
+              <QRCode
+                value={qrCodeValueString}
+              />
+            </View>
+            <TouchableOpacity
+                style={Style.button}
+                onPress={this.getLocation}>
+              <Text>Compartilhar localização</Text>
+            </TouchableOpacity>
           </View>
         ) : 
         isPassenger ? (
-          <QRCodeScanner
-            onRead={this.onSuccess}
-            topContent={
-              <Text style={styles.centerText}>
-                Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-              </Text>
-            }
-            bottomContent={
-              <TouchableOpacity style={styles.buttonTouchable}>
-                <Text style={styles.buttonText}>OK. Got it!</Text>
-              </TouchableOpacity>
-            }
-          />        
+          <View style={Style.passengerContainer}>
+            <QRCodeScanner
+              onRead={this.onSuccess}
+              cameraStyle={Style.cameraContainer}
+            />        
+          </View>
+
       ) :
           null 
         }
-        <Button onPress={this.getLocation} title="Compartilhar localização" />
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
-  },
-  textBold: {
-    fontWeight: '500',
-    color: '#000',
-  },
-  buttonText: {
-    fontSize: 21,
-    color: 'rgb(0,122,255)',
-  },
-  buttonTouchable: {
-    padding: 16,
-  },
-});
-
-ExampleScreen.propTypes = {
-  user: PropTypes.object,
-  userIsLoading: PropTypes.bool,
-  userErrorMessage: PropTypes.string,
-  fetchUser: PropTypes.func,
-  liveInEurope: PropTypes.bool,
-}
 
 const mapStateToProps = ({ example, driver, passenger }) => ({
   user: example.user,
@@ -153,4 +134,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ExampleScreen)
+)(ValidateRideScreen)

@@ -1,19 +1,25 @@
 import { StyleSheet } from 'react-native'
 import Fonts from 'App/Theme/Fonts'
 import ApplicationStyles from 'App/Theme/ApplicationStyles'
-import { red } from 'ansi-colors'
+
 
 export default StyleSheet.create({
   container: {
     ...ApplicationStyles.screen.container,
     margin: 30,
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   title: {
-    ...Fonts.style.h2,
+    ...Fonts.style.normal,
     textAlign: 'center',
-    marginBottom: 10,
+    margin: 20,
+  },
+  distanceTitle: {
+    ...Fonts.style.normal,
+    textAlign: 'center',
+    marginBottom: 5,
+    marginTop: 40,
   },
   text: {
     ...Fonts.style.normal,
@@ -45,19 +51,27 @@ export default StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 25,
+    margin: 35,
   },
   logo: {
     width: '100%',
     height: '100%',
   },
   button: {
-    color: '#0000FF',
+    alignSelf: 'center',
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 5,
   },
   selectedButton: {
     color: '#00FF00',
   },
-  qrcodeContainer: {
+  locationContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  distanceContainer: {
     alignItems: 'center',
   },
-})
+ })
