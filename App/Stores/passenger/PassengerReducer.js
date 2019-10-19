@@ -1,7 +1,7 @@
 import * as types from '../action-types';
 
 const INITIAL_STATE = {
-  id: 'asdasdasd',
+  id: '',
   loading: false,
   error: null,
 };

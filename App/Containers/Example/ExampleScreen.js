@@ -80,9 +80,9 @@ const mapStateToProps = ({ example, driver, passenger }) => ({
   userErrorMessage: example.userErrorMessage,
   liveInEurope: liveInEurope(example),
   driverId: driver.id,
-  driver: driver,
+  // driver: driver,
   passengerId: passenger.id,
-  passenger: passenger,
+  // passenger: passenger,
 })
 
 const mapDispatchToProps = (dispatch) => ({
