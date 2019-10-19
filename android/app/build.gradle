@@ -187,6 +187,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_geolocation')
     implementation project(':react-native-permissions')
     implementation project(':react-native-camera')
     implementation project(':react-native-svg')

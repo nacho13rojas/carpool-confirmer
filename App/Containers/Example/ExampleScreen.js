@@ -18,6 +18,7 @@ import Style from './ExampleScreenStyle'
 import { Images } from 'App/Theme'
 import QRCode from 'react-native-qrcode-svg';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import Geolocation from '@react-native-community/geolocation';
 
 
 class ExampleScreen extends React.Component {
@@ -48,6 +49,18 @@ class ExampleScreen extends React.Component {
   onSuccess = (e) => {
     console.log(e.data)
     Alert.alert(e.data);
+    
+  }
+
+  getLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const location = JSON.stringify(position);
+        this.setState({ location });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
   }
 
   render() {
@@ -88,7 +101,7 @@ class ExampleScreen extends React.Component {
       ) :
           null 
         }
-        <Button onPress={() => this._fetchUser()} title="Compartilhar localização" />
+        <Button onPress={this.getLocation} title="Compartilhar localização" />
       </View>
     )
   }
