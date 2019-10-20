@@ -6,9 +6,8 @@ export default class SplashScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.logo}>
-          {/* You will probably want to insert your logo here */}
-          <Text>Carpool Confirmer</Text>
+        <View>
+          <Text style={styles.title}>Carpool Confirmer</Text>
         </View>
       </View>
     )

@@ -1,23 +1,15 @@
 import React from 'react'
 import { 
-  Platform, 
   Text, 
   View, 
-  Button, 
-  Image, 
-  StyleSheet, 
   TouchableOpacity, 
   Alert,
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
 import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
-import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ValidateRideScreenStyle'
-import { Images } from 'App/Theme'
 import QRCode from 'react-native-qrcode-svg';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Geolocation from '@react-native-community/geolocation';
@@ -130,11 +122,7 @@ class ValidateRideScreen extends React.Component {
 }
 
 
-const mapStateToProps = ({ example, driver, passenger, location }) => ({
-  user: example.user,
-  userIsLoading: example.userIsLoading,
-  userErrorMessage: example.userErrorMessage,
-  liveInEurope: liveInEurope(example),
+const mapStateToProps = ({ driver, passenger, location }) => ({
   driverId: driver.id,
   passengerId: passenger.id,
   loading: location.loading,

@@ -3,6 +3,7 @@ import axios from "axios";
 import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/Stores/location/LocationActions'
 import { Config } from 'App/Config'
 
+
 export const options = {
   headers: {
     Accept: 'application/json',
@@ -12,10 +13,10 @@ export const options = {
 
 export function* sendLocation(id, isDriver, position) {
   console.log('sendLocation saga')
-  const url = Config.API_URL;
+  const baseUrl = Config.API_URL;
   try {
-      // const response = yield call(axios.post(url, { id, position }, options))
-      const response = { data: { driverDistance: 60 }};
+      // const response = yield call(axios.post(baseUrl, { id, position }, options))
+      const response = { data: { driverDistance: 3 }};
       yield put(sendLocationSuccess());
       if (!isDriver) {
         yield put(setDriverDistance(response.data.driverDistance));

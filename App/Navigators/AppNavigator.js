@@ -1,6 +1,6 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
-import ValidateRideScreen from 'App/Containers/example/ValidateRideScreen'
+import ValidateRideScreen from 'App/Containers/validateRide/ValidateRideScreen'
 import SplashScreen from 'App/Containers/splashScreen/SplashScreen'
 import LocationSharingScreen from 'App/Containers/locationSharing/LocationSharingScreen'
 
@@ -12,7 +12,7 @@ import LocationSharingScreen from 'App/Containers/locationSharing/LocationSharin
 const StackNavigator = createStackNavigator(
   {
     SplashScreen: SplashScreen,
-    MainScreen: ValidateRideScreen,
+    ValidateRideScreen: ValidateRideScreen,
     LocationSharingScreen: LocationSharingScreen,
   },
   {
