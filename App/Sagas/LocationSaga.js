@@ -1,7 +1,7 @@
 import { put, call, delay } from 'redux-saga/effects';
 import axios from "axios";
-import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/Stores/location/LocationActions'
-import { Config } from 'App/Config'
+import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/stores/location/LocationActions'
+import { config } from 'App/config'
 
 
 export const options = {
@@ -13,7 +13,7 @@ export const options = {
 
 export function* sendLocation(id, isDriver, position) {
   console.log('sendLocation saga')
-  const baseUrl = Config.API_URL;
+  const baseUrl = config.API_URL;
   try {
       // const response = yield call(axios.post(baseUrl, { id, position }, options))
       yield delay(1000)

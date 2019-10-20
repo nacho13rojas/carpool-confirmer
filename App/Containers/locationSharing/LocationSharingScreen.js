@@ -9,9 +9,9 @@ import {
   ActivityIndicator, 
 } from 'react-native'
 import { connect } from 'react-redux'
-import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
+import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/stores/location/LocationActions'
 import Style from './LocationSharingScreenStyle'
-import { Images } from 'App/Theme'
+import { Images } from 'App/theme'
 import Geolocation from '@react-native-community/geolocation';
 
 

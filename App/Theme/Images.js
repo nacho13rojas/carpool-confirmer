@@ -3,5 +3,5 @@
  */
 
 export default {
-  location: require('App/Assets/Images/location.png'),
+  location: require('App/assets/images/location.png'),
 }

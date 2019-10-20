@@ -1,7 +1,7 @@
 import { takeLatest, all } from 'redux-saga/effects'
 import { startup } from './StartupSaga'
 import { sendLocation } from './LocationSaga'
-import * as types from '../Stores/action-types'
+import * as types from '../stores/action-types'
 
 
 export default function* root() {
