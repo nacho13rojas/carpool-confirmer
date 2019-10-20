@@ -1,7 +1,7 @@
 import * as types from '../action-types';
 
 const INITIAL_STATE = {
-  id: 'driverIdMock',
+  id: 'driverIdMock1234',
   loading: false,
   error: null,
 };
@@ -11,7 +11,8 @@ export default (state = INITIAL_STATE, action) => {
     case types.GET_DRIVER_ID:
       return { 
           ...state, 
-          loading: true 
+          loading: true,
+          error: null
         };
     case types.GET_DRIVER_ID_SUCCESS:
       return {

@@ -4,15 +4,17 @@ import {
   Text, 
   View, 
   Button, 
-  ActivityIndicator, 
   Image, 
   StyleSheet, 
   TouchableOpacity, 
-  Alert
+  Alert,
+  ToastAndroid,
+  ActivityIndicator,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
+import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ValidateRideScreenStyle'
 import { Images } from 'App/Theme'
@@ -48,18 +50,25 @@ class ValidateRideScreen extends React.Component {
   }
 
   onSuccess = (e) => {
-    console.log(e.data)
-    Alert.alert(e.data);
+    const driverInfo = JSON.parse(e.data)
+    ToastAndroid.show(`driverId: ${driverInfo.driverId}, date: ${driverInfo.date}`, ToastAndroid.LONG);
     NavigationService.navigate('LocationSharingScreen')
   }
 
   getLocation = () => {
+    const { driverId, getLocation, sendLocation } = this.props
+    getLocation()
     Geolocation.getCurrentPosition(
       position => {
-        this.setState({ position });
+        this.setState({ position })
+        ToastAndroid.show(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`, ToastAndroid.LONG);
+        getLocationSuccess()
+        sendLocation(driverId, position, true)
       },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      error => {
+        getLocationFail(error.message)
+        Alert.alert(error.message)
+      }
     );
   }
 
@@ -67,6 +76,7 @@ class ValidateRideScreen extends React.Component {
     console.log(this.props)
     console.log(this.state)
     const { isDriver, isPassenger, qrCodeValueString } = this.state
+    const { loading } = this.props
 
     return (
       <View style={Style.container}>
@@ -92,11 +102,15 @@ class ValidateRideScreen extends React.Component {
                 value={qrCodeValueString}
               />
             </View>
-            <TouchableOpacity
+            { loading ? 
+              <ActivityIndicator size="small" color="#0000ff" />
+            :
+              <TouchableOpacity
                 style={Style.button}
                 onPress={this.getLocation}>
-              <Text>Compartilhar localização</Text>
+                <Text>Compartilhar localização</Text>
             </TouchableOpacity>
+            }
           </View>
         ) : 
         isPassenger ? (
@@ -116,19 +130,21 @@ class ValidateRideScreen extends React.Component {
 }
 
 
-const mapStateToProps = ({ example, driver, passenger }) => ({
+const mapStateToProps = ({ example, driver, passenger, location }) => ({
   user: example.user,
   userIsLoading: example.userIsLoading,
   userErrorMessage: example.userErrorMessage,
   liveInEurope: liveInEurope(example),
   driverId: driver.id,
-  // driver: driver,
   passengerId: passenger.id,
-  // passenger: passenger,
+  loading: location.loading,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(ExampleActions.fetchUser()),
+  getLocation: () => dispatch(getLocation()),
+  getLocationSuccess: () => dispatch(getLocationSuccess()),
+  getLocationFail: () => dispatch(getLocationFail()),
+  sendLocation: () => dispatch(sendLocation()),
 })
 
 export default connect(

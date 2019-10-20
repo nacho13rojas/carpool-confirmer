@@ -2,12 +2,15 @@ import React from 'react'
 import { 
   Text, 
   View, 
-  Button, 
+  Image, 
   Alert,
   TouchableOpacity,
+  ToastAndroid,
+  ActivityIndicator, 
 } from 'react-native'
 import { connect } from 'react-redux'
 import ExampleActions from 'App/Stores/Example/Actions'
+import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './LocationSharingScreenStyle'
 import { Images } from 'App/Theme'
@@ -19,60 +22,57 @@ class LocationSharingScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isDriver: false,
-      isPassenger: false,
-      qrCodeValueString: '',
+      position: null,
     }
   }
 
-  componentDidMount() {
-    const { driverId } = this.props;
-    const qrCodeValue = { driverId, date: new Date() }
-    this.setState({ qrCodeValueString: JSON.stringify(qrCodeValue) })
-  }
-
-  onDriverClick = () => {
-    this.setState({ isDriver: true, isPassenger: false })
-  }
-
-  onPassengerClick = () => {
-    this.setState({ isDriver: false, isPassenger: true })
-  }
-
-  onSuccess = (e) => {
-    console.log(e.data)
-    Alert.alert(e.data);
-    
-  }
-
   getLocation = () => {
+    const { driverId, getLocation, sendLocation } = this.props
+    getLocation()
     Geolocation.getCurrentPosition(
       position => {
-        this.setState({ position });
-        console.log(position)
+        this.setState({ position })
+        ToastAndroid.show(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`, ToastAndroid.LONG);
+        getLocationSuccess()
+        sendLocation(driverId, position, false)
       },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+      error => {
+        getLocationFail(error.message)
+        Alert.alert(error.message)
+      });
   }
 
   render() {
     console.log(this.props)
     console.log(this.state)
+    const { driverDistance, loading } = this.props;
     return (
       <View style={Style.container}>
         <Text style={Style.title}>Validando geolocalização</Text>
         <View style={Style.locationContainer}>
-            <Text style={Style.text}>Ícone de geolocalização</Text>
-            <View style={Style.distanceContainer}>
-                <TouchableOpacity
-                    style={Style.button}
-                    onPress={this.getLocation}>
+          <Image
+              style={{width: 50, height: 50, alignSelf: 'center'}}
+              source={Images.location}
+          />            
+          <View style={Style.distanceContainer}>
+            { loading ? 
+              <ActivityIndicator size="small" color="#0000ff" />
+            :
+              <TouchableOpacity
+                style={Style.button}
+                onPress={this.getLocation}>
                 <Text>Compartilhar localização</Text>
-                </TouchableOpacity>
-                <Text style={Style.distanceTitle}>Distância do motorista</Text>
-                <Text style={Style.text}>600m</Text>
-            </View>
+              </TouchableOpacity>
+            }
+            { driverDistance ? 
+              <View>
+                  <Text style={Style.distanceTitle}>Distância do motorista</Text>
+                  <Text style={Style.text}>{ driverDistance }m</Text>
+              </View>
+            :
+              null
+            }
+          </View>
         </View>
       </View>
     )
@@ -80,19 +80,18 @@ class LocationSharingScreen extends React.Component {
 }
 
 
-const mapStateToProps = ({ example, driver, passenger }) => ({
-  user: example.user,
-  userIsLoading: example.userIsLoading,
-  userErrorMessage: example.userErrorMessage,
-  liveInEurope: liveInEurope(example),
+const mapStateToProps = ({ driver, passenger, location }) => ({
   driverId: driver.id,
-  // driver: driver,
   passengerId: passenger.id,
-  // passenger: passenger,
+  driverDistance: location.driverDistance,
+  loading: location.loading,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(ExampleActions.fetchUser()),
+  getLocation: () => dispatch(getLocation()),
+  getLocationSuccess: () => dispatch(getLocationSuccess()),
+  getLocationFail: () => dispatch(getLocationFail()),
+  sendLocation: () => dispatch(sendLocation()),
 })
 
 export default connect(

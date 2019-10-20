@@ -74,4 +74,7 @@ export default StyleSheet.create({
   distanceContainer: {
     alignItems: 'center',
   },
+  distanceInfoContainer: {
+    alignItems: 'center',
+  },
  })
