@@ -1,3 +1,5 @@
+export const START_UP = 'start_up';
+
 export const GET_DRIVER_ID = 'get_driver_id';
 export const GET_DRIVER_ID_SUCCESS = 'get_driver_id_success';
 export const GET_DRIVER_ID_FAIL = 'get_driver_id_fail';

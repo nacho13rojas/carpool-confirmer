@@ -4,7 +4,7 @@ import AppNavigator from 'App/Navigators/AppNavigator'
 import { View } from 'react-native'
 import styles from './RootScreenStyle'
 import { connect } from 'react-redux'
-import StartupActions from 'App/Stores/Startup/Actions'
+import { startup } from 'App/Stores/Startup/Actions'
 
 class RootScreen extends Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ class RootScreen extends Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  startup: () => dispatch(StartupActions.startup()),
+  startup: () => dispatch(startup()),
 })
 
 export default connect(
