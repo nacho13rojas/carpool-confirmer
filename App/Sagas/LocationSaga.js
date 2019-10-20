@@ -1,4 +1,4 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, delay } from 'redux-saga/effects';
 import axios from "axios";
 import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/Stores/location/LocationActions'
 import { Config } from 'App/Config'
@@ -16,6 +16,7 @@ export function* sendLocation(id, isDriver, position) {
   const baseUrl = Config.API_URL;
   try {
       // const response = yield call(axios.post(baseUrl, { id, position }, options))
+      yield delay(1000)
       const response = { data: { driverDistance: 3 }};
       yield put(sendLocationSuccess());
       if (!isDriver) {

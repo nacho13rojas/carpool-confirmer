@@ -15,41 +15,10 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
-  text: {
-    ...Fonts.style.normal,
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  instructions: {
-    ...Fonts.style.normal,
-    textAlign: 'center',
-    marginBottom: 5,
-    fontStyle: 'italic',
-  },
-  loading: {
-    ...Fonts.style.normal,
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  result: {
-    ...Fonts.style.normal,
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  error: {
-    ...Fonts.style.normal,
-    textAlign: 'center',
-    marginBottom: 5,
-    color: 'red',
-  },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
     margin: 35,
-  },
-  logo: {
-    width: '100%',
-    height: '100%',
   },
   button: {
     alignSelf: 'center',
@@ -57,9 +26,6 @@ export default StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     padding: 5,
-  },
-  selectedButton: {
-    color: '#00FF00',
   },
   driverContainer: {
     flex: 1,
