@@ -4,7 +4,7 @@ import AppNavigator from 'App/navigators/AppNavigator'
 import { View } from 'react-native'
 import styles from './RootScreenStyle'
 import { connect } from 'react-redux'
-import { startup } from 'App/stores/Startup/Actions'
+import { startup } from 'App/stores/startup/Actions'
 
 class RootScreen extends Component {
   componentDidMount() {

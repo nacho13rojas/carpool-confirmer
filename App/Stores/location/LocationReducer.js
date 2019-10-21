@@ -19,7 +19,6 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         position: action.payload,
-        loading: false
       };
     case types.GET_LOCATION_FAIL:
       return { 
@@ -32,6 +31,17 @@ export default (state = INITIAL_STATE, action) => {
           ...state,
           driverDistance: action.payload,
           loading: false
+        };
+    case types.SEND_LOCATION_SUCCESS:
+      return { 
+          ...state,
+          loading: false
+        };
+    case types.SEND_LOCATION_FAIL:
+      return { 
+          ...state,
+          error: action.payload,
+          loading: false,
         };
     default:
       return state;

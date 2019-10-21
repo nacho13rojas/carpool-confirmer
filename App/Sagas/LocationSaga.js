@@ -11,8 +11,8 @@ export const options = {
   }
 }
 
-export function* sendLocation(id, isDriver, position) {
-  console.log('sendLocation saga')
+export function* sendLocation(action) {
+  const { driverId, isDriver, position } = action.payload
   const baseUrl = config.API_URL;
   try {
       // const response = yield call(axios.post(baseUrl, { id, position }, options))

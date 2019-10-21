@@ -1,4 +1,5 @@
 import * as types from '../action-types'
+import Geolocation from '@react-native-community/geolocation';
 
 
 export const getLocation = () => ({
@@ -16,9 +17,9 @@ export const getLocationFail = (error) => ({
 })
 
 
-export const sendLocation = (id, position, isDriver) => ({
+export const sendLocation = (payload) => ({
    type: types.SEND_LOCATION,
-   payload: position
+   payload: payload
 })
 
 export const sendLocationSuccess = () => ({

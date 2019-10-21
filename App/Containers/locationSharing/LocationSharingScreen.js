@@ -13,6 +13,7 @@ import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from '
 import Style from './LocationSharingScreenStyle'
 import { Images } from 'App/theme'
 import Geolocation from '@react-native-community/geolocation';
+import Colors from 'App/theme/Colors'
 
 
 class LocationSharingScreen extends React.Component {
@@ -25,25 +26,24 @@ class LocationSharingScreen extends React.Component {
   }
 
   getLocation = () => {
-    const { driverId, getLocation, sendLocation } = this.props
+    const { driverId, getLocation, getLocationSuccess, getLocationFail, sendLocation } = this.props
     getLocation()
     Geolocation.getCurrentPosition(
       position => {
         this.setState({ position })
         ToastAndroid.show(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`, ToastAndroid.LONG);
         getLocationSuccess()
-        sendLocation(driverId, position, false)
+        sendLocation({ driverId, position, isDriver: false })
       },
       error => {
         getLocationFail(error.message)
         Alert.alert(error.message)
-      });
+      }
+    );
   }
 
   render() {
-    console.log(this.props)
-    console.log(this.state)
-    const { driverDistance, loading } = this.props;
+    const { driverId, driverDistance, loading } = this.props;
     return (
       <View style={Style.container}>
         <Text style={Style.title}>Validando geolocalização</Text>
@@ -54,7 +54,7 @@ class LocationSharingScreen extends React.Component {
           />            
           <View style={Style.distanceContainer}>
             { loading ? 
-              <ActivityIndicator size="small" color="#0000ff" />
+              <ActivityIndicator size="small" color={Colors.blue} />
             :
               <TouchableOpacity
                 style={Style.button}
@@ -87,9 +87,9 @@ const mapStateToProps = ({ driver, passenger, location }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getLocation: () => dispatch(getLocation()),
-  getLocationSuccess: () => dispatch(getLocationSuccess()),
-  getLocationFail: () => dispatch(getLocationFail()),
-  sendLocation: () => dispatch(sendLocation()),
+  getLocationSuccess: (position) => dispatch(getLocationSuccess(position)),
+  getLocationFail: (error) => dispatch(getLocationFail(error)),
+  sendLocation: (payload) => dispatch(sendLocation(payload)),
 })
 
 export default connect(
