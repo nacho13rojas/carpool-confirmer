@@ -1,0 +1,19 @@
+Instruções para rodar o aplicativo:
+
+1)
+git clone https://github.com/nacho13rojas/carpool-confirmer
+
+2)
+cd carpool-confirmer/
+
+3)
+npm install
+
+4) Generar keystore para debug
+cd android/app/ && keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
+
+5)
+cd ../..
+
+6)
+react-native run-android
