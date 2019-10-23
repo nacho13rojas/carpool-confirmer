@@ -9,11 +9,11 @@ import {
   ActivityIndicator, 
 } from 'react-native'
 import { connect } from 'react-redux'
-import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/stores/location/LocationActions'
+import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
 import Style from './LocationSharingScreenStyle'
-import { Images } from 'App/theme'
+import { Images } from 'App/Theme'
 import Geolocation from '@react-native-community/geolocation';
-import Colors from 'App/theme/Colors'
+import Colors from 'App/Theme/Colors'
 
 
 class LocationSharingScreen extends React.Component {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import NavigationService from 'App/services/NavigationService'
-import AppNavigator from 'App/navigators/AppNavigator'
+import NavigationService from 'App/Services/NavigationService'
+import AppNavigator from 'App/Navigators/AppNavigator'
 import { View } from 'react-native'
 import styles from './RootScreenStyle'
 import { connect } from 'react-redux'
-import { startup } from 'App/stores/startup/Actions'
+import { startup } from 'App/Stores/Startup/Actions'
 
 class RootScreen extends Component {
   componentDidMount() {

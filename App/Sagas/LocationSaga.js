@@ -1,7 +1,7 @@
 import { put, call, delay } from 'redux-saga/effects';
 import axios from "axios";
-import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/stores/location/LocationActions'
-import { config } from 'App/config'
+import { sendLocationSuccess, sendLocationFail, setDriverDistance } from 'App/Stores/location/LocationActions'
+import { config } from 'App/Config'
 
 
 export const options = {

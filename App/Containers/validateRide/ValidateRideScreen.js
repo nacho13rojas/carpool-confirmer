@@ -8,13 +8,13 @@ import {
   ActivityIndicator,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/stores/location/LocationActions'
+import { getLocation, getLocationSuccess, getLocationFail, sendLocation } from 'App/Stores/location/LocationActions'
 import Style from './ValidateRideScreenStyle'
 import QRCode from 'react-native-qrcode-svg';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Geolocation from '@react-native-community/geolocation';
-import NavigationService from '../../services/NavigationService'
-import Colors from 'App/theme/Colors'
+import NavigationService from '../../Services/NavigationService'
+import Colors from 'App/Theme/Colors'
 
 
 class ValidateRideScreen extends React.Component {

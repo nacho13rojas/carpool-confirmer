@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import configureStore from './CreateStore'
-import rootSaga from 'App/sagas'
+import rootSaga from 'App/Sagas'
 import DriverReducer from './driver/DriverReducer'
 import PassengerReducer from './passenger/PassengerReducer'
 import LocationReducer from './location/LocationReducer'

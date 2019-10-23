@@ -1,5 +1,5 @@
 import { put, delay } from 'redux-saga/effects'
-import NavigationService from 'App/services/NavigationService'
+import NavigationService from 'App/Services/NavigationService'
 
 
 export function* startup() {
